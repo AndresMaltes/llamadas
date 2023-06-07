@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <link 
+    rel="stylesheet"
+    href="https:/use.fontawesome.com/releases/v5.15.2/css/all.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+    crossorigin="anonymous"
+    >
+    
+    <title>Javascript</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/">Javascript CRUD</a>
+            </div>
+        </nav>
+    </header>
+    <main class="main-content">
+        <div class="crud-container">
+            <div class="crud-header">
+                <h1>Usuarios Registrados</h1>
+                <button class="button is-success" onclick="showRegisterModal()">
+                    <i class="fas fa-plus">
+                        <span>Nuevo Usuario</span>
+                    </i>
+                </button>
+            </div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Nombres</th>
+                    <th>Password</th>
+                    <th>Password2</th>
+                    <th>Rol</th>
+                  </tr>
+                </thead>
+                
+                <tbody id="users-table">
+                  
+                </tbody>
+              </table>
+        </div>
+    </main>
+
+    <div class="modal" id="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Modal title</p>
+            <button class="delete" aria-label="close" onclick="showRegisterModal()"></button>
+          </header>
+          <section class="modal-card-body">
+            <form id="register-form">
+                <div class="field"> 
+                    <label class="label">User: </label>
+                    <div class="control">
+                      <input class="input" type="text" name="user" placeholder="Ingresa Usuario">
+                    </div>
+                </div>
+                <div class="field"> 
+                    <label class="label">Nombre: </label>
+                    <div class="control">
+                      <input class="input" type="text" name="nombre" placeholder="Ingresa Nombre">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password: </label>
+                    <div class="control">
+                      <input class="input" type="password" name="password" placeholder="Ingresa Contraseña">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Confirm Password</label>
+                    <div class="control has-icons-left">
+                      <input class="input is-success" name="password2" type="password" placeholder="Confirme la contraseña">
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-phone"></i>
+                      
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Rol</label>
+                    <div class="select">
+                        <label for="rol" class="formulario__label"></label>
+                        <select id="rol" class="formulario__input">
+                            <option >Administrador</option>
+                            <option >Encargado</option>
+                            <option >Gerente</option>
+                            <option >Ingeniero</option>
+                            <option >Cliente</option>
+                        </select>
+                      
+                    </div>
+                </div>
+            </form>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success" onclick="insertData()">
+                <i class="fas fa-save"></i>
+                <span>Registrar</span>
+            </button>
+          </footer>
+        </div>
+      </div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
+<script src="js/app.js"></script>
+</html>
