@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD con Firebase</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://kit.fontawesome.com/c95f5e00b0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          CRUD
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    </nav>
+  </header>
+  <center>
+    <main class="main-content">
+    <div class="crud-container">
+      <div class="crud-header">
+        <h1>Usuarios registrados</h1>
+        <button class="button is-success" id="openRegister">
+          <i class="fas fa-plus"></i>
+          <span>Registrar Usuario</span>
+        </button>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Telefono</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody id="userTable">
+          <tr>
+            <td>Allan</td>
+            <td>3123696687</td>
+            <td>
+              <button class="button is-warning">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              
+              <button class="button is-danger">
+                <i class="fas fa-trash"></i>
+              </button>
+
+              <button class="button is-info">
+                <i class="fas fa-plus">
+                </i>
+              </button>
+            </td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  </center>
+  
+
+  <div class="modal" id="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Registrar Usuario</p>
+        <button class="delete" arial-label="close" id="closeRegisterModal"></button>
+      </header>
+      <section class="modal-card-body">
+        <!-- Content ... -->
+      <form id="register-form">
+          <div class="field">
+            <label class="label">Nombre</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Escribe tu nombre" name="nombre">
+            </div>
+          </div>
+          
+          <div class="field">
+            <label class="label">Telefono</label>
+            <div class="control has-icons-left">
+              <input class="input" type="tel" placeholder="Escribe tu numero de telefono" name="cel">
+              <span class="icon is-small is-left">
+                <i class="fas fa-phone"></i>
+              </span>
+            </div>
+          </div>
+          
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" type="submit">
+          <i class="fas fa-save"></i>
+          <span>Guardar Usuario</span>
+          </button>
+      </form>
+      </footer>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-update">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Actualizar Usuario</p>
+        <button class="delete" arial-label="close" id="closeUpdateModal"></button>
+      </header>
+      <section class="modal-card-body">
+        <!-- Content ... -->
+      <form id="update-form">
+          <div class="field">
+            <label class="label">Nombre</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Escribe tu nombre" name="nombre">
+            </div>
+          </div>
+          
+          <div class="field">
+            <label class="label">Telefono</label>
+            <div class="control has-icons-left">
+              <input class="input" type="tel" placeholder="Escribe tu numero de telefono" name="cel">
+              <span class="icon is-small is-left">
+                <i class="fas fa-phone"></i>
+              </span>
+            </div>
+          </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" type="submit">
+          <i class="fas fa-save"></i>
+          <span>Actualizar Usuario</span>
+          </button>
+      </form>
+      </footer>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-add">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Agregar Contacto</p>
+        <button class="delete" arial-label="close" id="closeAddModal"></button>
+      </header>
+      <section class="modal-card-body">
+        <!-- Content ... -->
+      <form id="add-form">
+        <div id="contenido">
+          <button class="button is-info" id="btnAdd" onclick="AgregarContacto()" >
+            <i class="fas fa-plus">
+            </i>
+        </button>
+
+        <div id="add-container">
+
+        </div>
+
+        
+        </div>
+          
+      </section>
+        
+      </form>
+      
+    </div>
+  </div>
+
+  
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./Js/app.js" ></script>
+</body>
+</html>
