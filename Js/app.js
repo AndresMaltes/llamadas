@@ -55,7 +55,7 @@ const showAddModal = () => {
     addModal.classList.toggle('is-active')
 }
 
-
+let idContact = "";
 function AgregarContacto(){
     contenido.innerHTML += `
     <div id="add-container">
@@ -147,11 +147,11 @@ window.addEventListener('DOMContentLoaded', async (e) => {
             const addButton = document.querySelectorAll('.is-info')
             addButton.forEach((button) => {
                 button.addEventListener('click', (e) => {
-                    
+                    showAddModal()
                     firebase.database().ref(`Usuarios/${e.target.dataset.id}`).once('value').then((user) =>{
                         const data = user.val()
-                        showAddModal()
-                        contenido.innerHTML = `
+                        
+                        contenido.innerHTML += `
 
                         <div id="encabezado">
                             <h1 style="margin-right: 400px ;"> Bienvenido  ${data.Nombre}</h1>
@@ -160,25 +160,30 @@ window.addEventListener('DOMContentLoaded', async (e) => {
                                 <i class="fas fa-plus">
                                 </i>
                             </button>
-                        </div>
 
-                        
+                        </div>
+                        `
+                        idContact = data.Uid;
+                        idContacts.innerHTML = `
+                        <input  id="Id" value="${idContact}">
                         `
 
+                        
+                        
+                        const contacRef = firebase.database().ref('Usuarios/'+idContact+'/Contactos');
                         registerAddForm.addEventListener('submit', (e) => {
                             e.preventDefault()
                             
                             const nombre = registerAddForm['nombre'].value
                             const telefono = registerAddForm['cel'].value
                         
-                            const contacRef = firebase.database().ref('Usuarios/'+data.Uid+'/Contactos');
+                            
                             const registerContact = contacRef.push()
                             registerContact.set({
                                 Uid: registerContact._delegate._path.pieces_[1],
                                 Nombre: nombre,
                                 Telefono: telefono
                             })
-                            showRegisterModal()
                         })
                     })
                     
@@ -188,6 +193,69 @@ window.addEventListener('DOMContentLoaded', async (e) => {
         }) 
     })
 })
+
+const contacRef = firebase.database().ref('Usuarios/-NXle6PJPsH8wEE0WPGK/Contactos');
+window.addEventListener('DOMContentLoaded', async (e) =>{
+    await contacRef.on('value', (contacts) => {
+        contactTable.innerHTML = ''
+        contacts.forEach((contact) =>{
+            let contactData = contact.val()
+            console.log(contactData.Nombre);
+            
+            contactTable.innerHTML += `
+            <tr>
+                <td>${contactData.Nombre}</td>
+                <td>${contactData.Telefono}</td>
+                <td>
+                    <button class="button is-warning" data-id="${contactData.Uid}">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="button is-danger" data-id="${contactData.Uid}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="button is-info" data-id="${contactData.Uid}">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </td>
+            </tr>
+            `
+            const updateButtons = document.querySelectorAll('.is-warning')
+            updateButtons.forEach((button) => {
+                button.addEventListener('click', (e) => {
+                    showUpdateModal()
+                    firebase.database().ref(`Contactos/${e.target.dataset.id}`).once('value').then((contact) =>{
+                        const data = user.val()
+                        updateForm['nombre'].value = data.Nombre
+                        updateForm['cel'].value = data.Telefono
+                    })
+                    const uid = e.target.dataset.id
+                    updateForm.addEventListener('submit', (e) => {
+                        e.preventDefault()
+
+                        const nombre = updateForm['nombre'].value
+                        const telefono = updateForm['cel'].value
+
+                        firebase.database().ref(`Usuarios/${uid}`).update({
+                            Nombre: nombre,
+                            Telefono: telefono
+                        })
+                        showUpdateModal()
+                    })
+                })
+            })
+
+            const deleteButtons = document.querySelectorAll('.is-danger')
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', (e) => {
+                    deleteStudent(e.target.dataset.id)
+                })
+            })
+
+            
+        })
+    })
+})
+
 
 registerForm.addEventListener('submit', (e) => {
     e.preventDefault()

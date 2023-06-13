@@ -155,17 +155,42 @@
         <!-- Content ... -->
       <form id="add-form">
         <div id="contenido">
-          <button class="button is-info" id="btnAdd" onclick="AgregarContacto()" >
-            <i class="fas fa-plus">
-            </i>
-        </button>
-
-        <div id="add-container">
-
+          
         </div>
-
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Telefono</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody id="contactTable">
+            <tr>
+              <td>Allan</td>
+              <td>3123696687</td>
+              <td>
+                <button class="button is-warning">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+                
+                <button class="button is-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
+  
+                <button class="button is-info">
+                  <i class="fas fa-plus">
+                  </i>
+                </button>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+        <div id="idContacts">
+          <input  id="Id" value="">
+        </div>
         
-        </div>
           
       </section>
         
